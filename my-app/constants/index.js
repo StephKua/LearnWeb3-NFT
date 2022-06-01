@@ -286,7 +286,7 @@ export const abi = [
     },
     {
         "inputs": [],
-        "name": "presaleEnded",
+        "name": "presaleEndedTimestamp",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -465,19 +465,6 @@ export const abi = [
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "tokenIds",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [
             {
                 "internalType": "address",
@@ -523,6 +510,19 @@ export const abi = [
     {
         "inputs": [],
         "name": "totalSupply",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "totalTokenIds",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -582,4 +582,4 @@ export const abi = [
     }
 ]
 
-export const NFT_CONTRACT_ADDRESS = "0x50C5508408a5c606041a65fA3EA46F4997F77f7B"
+export const NFT_CONTRACT_ADDRESS = "0x4B409AB40AD5480479FF44f0116C15B41e1A0992"

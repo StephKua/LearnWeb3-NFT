@@ -49,23 +49,23 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     // allow user to mint during presale only when it's not paused
     function presaleMint() public payable onlyWhenNotPaused {
-        require(presaleStarted && block.timestamp < presaleEnded, "Presale is not running");
+        require(presaleStarted && block.timestamp < presaleEndedTimestamp, "Presale is not running");
         require(whitelist.whitelistedAddresses(msg.sender), "You are not whitelisted");
-        require(tokenIds < maxTokenIds, "Exceeded maximum Crypto Devs supply");
+        require(totalTokenIds < maxTokenIds, "Exceeded maximum Crypto Devs supply");
         require(msg.value >= _price, "Ether sent is not correct");
 
-        tokenIds += 1;
+        totalTokenIds += 1;
 
-        _safeMint(msg.sender, tokenIds);
+        _safeMint(msg.sender, totalTokenIds);
     }
 
     // mint when it's not paused and presale has ended
     function mint() public payable onlyWhenNotPaused {
-        require(presaleStarted && block.timestamp >=  presaleEnded, "Presale has not ended yet");
-        require(tokenIds < maxTokenIds, "Exceed maximum Crypto Devs supply");
+        require(presaleStarted && block.timestamp >=  presaleEndedTimestamp, "Presale has not ended yet");
+        require(totalTokenIds < maxTokenIds, "Exceed maximum Crypto Devs supply");
         require(msg.value >= _price, "Ether sent is not correct");
-        tokenIds += 1;
-        _safeMint(msg.sender, tokenIds); 
+        totalTokenIds += 1;
+        _safeMint(msg.sender, totalTokenIds); 
     }
 
     // get base URI
