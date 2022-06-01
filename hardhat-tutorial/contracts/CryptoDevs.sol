@@ -7,21 +7,28 @@ import "./IWhitelist.sol";
 
 contract CryptoDevs is ERC721Enumerable, Ownable {
     
+    // Base URI + Token ID
     string _baseTokenURI;
 
+    // price for each NFT
     uint256 public _price = 0.01 ether;
 
+    // use to pause the contract in case of emergency 
     bool public _paused;
 
+    // max num of NFT
     uint256 public maxTokenIds = 20;
 
-    uint256 public tokenIds;
+    // total minted NFT
+    uint256 public totalTokenIds;
 
     IWhitelist whitelist;
 
+    // use to check if presale started
     bool public presaleStarted;
 
-    uint256 public presaleEnded;
+    // timestamp when presale will end
+    uint256 public presaleEndedTimestamp;
 
     modifier onlyWhenNotPaused {
         require(!_paused, "Contract currently paused");
@@ -33,12 +40,14 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         whitelist = IWhitelist(whitelistContract);
     }
 
+    // only owner can start presale
     function startPresale() public onlyOwner {
         presaleStarted = true;
 
-        presaleEnded = block.timestamp + 5 minutes;
+        presaleEndedTimestamp = block.timestamp + 5 minutes;
     }
 
+    // allow user to mint during presale only when it's not paused
     function presaleMint() public payable onlyWhenNotPaused {
         require(presaleStarted && block.timestamp < presaleEnded, "Presale is not running");
         require(whitelist.whitelistedAddresses(msg.sender), "You are not whitelisted");
@@ -50,6 +59,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         _safeMint(msg.sender, tokenIds);
     }
 
+    // mint when it's not paused and presale has ended
     function mint() public payable onlyWhenNotPaused {
         require(presaleStarted && block.timestamp >=  presaleEnded, "Presale has not ended yet");
         require(tokenIds < maxTokenIds, "Exceed maximum Crypto Devs supply");
@@ -58,6 +68,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         _safeMint(msg.sender, tokenIds); 
     }
 
+    // get base URI
     function _baseURI() internal view virtual override returns (string memory) {
         return _baseTokenURI;
     }
