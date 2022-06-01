@@ -215,7 +215,7 @@ export default function Home() {
       // have read-only access to the Contract
       const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
       // call the tokenIds from the contract
-      const _tokenIds = await nftContract.tokenIds();
+      const _tokenIds = await nftContract.totalTokenIds();
       //_tokenIds is a `Big Number`. We need to convert the Big Number to a string
       setTokenIdsMinted(_tokenIds.toString());
     } catch (err) {
@@ -376,7 +376,7 @@ export default function Home() {
           {renderButton()}
         </div>
         <div>
-          <img className={styles.image} src="./cryptodevs/0.svg" />
+          <img className={styles.image} src="./crypto-devs.svg" />
         </div>
       </div>
 
